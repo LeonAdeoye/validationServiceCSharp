@@ -13,12 +13,12 @@ namespace validation_service.Services
             _listOfErrors = new();
         }
 
-        public List<string> Validate(string fileName)
+        public IEnumerable<string> Validate(string fileName)
         {
             return _listOfErrors;
         }
 
-        public List<String> ValidateRow(string[] columnValues, ValidationConfiguration[] validationConfigurations)
+        public IEnumerable<String> ValidateRow(string[] columnValues, ValidationConfiguration[] validationConfigurations)
         {
             List<string> listOfErrors = new();
             for (int columnIndex = 0; columnIndex < columnValues.Length; columnIndex++)

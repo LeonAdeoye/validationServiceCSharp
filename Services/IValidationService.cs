@@ -4,7 +4,7 @@ namespace validation_service.Services
 {
     public interface IValidationService
     {
-        List<string> Validate(string fileName);
-        List<string> ValidateRow(string[] columnValues, ValidationConfiguration[] validationConfigurations);
+        IEnumerable<string> Validate(string fileName);
+        IEnumerable<string> ValidateRow(string[] columnValues, ValidationConfiguration[] validationConfigurations);
     }
 }

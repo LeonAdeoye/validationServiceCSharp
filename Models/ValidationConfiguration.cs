@@ -1,6 +1,6 @@
 ﻿namespace validation_service.Models
 {
-    public class ValidationConfiguration
+    public record ValidationConfiguration
     {
         public int Id
         {
@@ -42,6 +42,5 @@
             get;
             set;
         }
-
     }
 }
