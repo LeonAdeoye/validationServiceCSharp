@@ -10,7 +10,7 @@ public class ValidationServiceController : ControllerBase
     private readonly ILogger<ValidationServiceController> _logger;
     private readonly IValidationService _validationService;
 
-    public ValidationServiceController(ILogger<ValidationServiceController> logger, IValidationService validationService)
+    public ValidationServiceController(ILogger<ValidationServiceController> logger)
     {
         _logger = logger;
         _validationService = new ValidationService();
