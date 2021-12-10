@@ -3,7 +3,7 @@ using validation_service.Validators;
 
 namespace validation_service.Services
 {
-    public class ValidationService
+    public class ValidationService : IValidationService
     {
         private readonly List<string> _listOfErrors;
         private readonly ValidatorFactory _validatorFactory;

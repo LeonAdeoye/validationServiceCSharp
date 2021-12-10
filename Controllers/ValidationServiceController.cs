@@ -8,12 +8,12 @@ namespace validation_service.Controllers;
 public class ValidationServiceController : ControllerBase
 {
     private readonly ILogger<ValidationServiceController> _logger;
-    private readonly ValidationService _validationService;
+    private readonly IValidationService _validationService;
 
-    public ValidationServiceController(ILogger<ValidationServiceController> logger)
+    public ValidationServiceController(ILogger<ValidationServiceController> logger, IValidationService validationService)
     {
         _logger = logger;
-        _validationService = new();
+        _validationService = validationService;
     }
 
     [HttpPost(Name = "PostValidate")]
