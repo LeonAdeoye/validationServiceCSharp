@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using validation_service.Models;
 using validation_service.Services;
 
 namespace validation_service.Controllers;
@@ -28,7 +29,27 @@ public class ValidationServiceController : ControllerBase
             return errors;
         }
 
-        errors.AddRange(_validationService.Validate(fileName));
+        errors.AddRange(_validationService.Validate(fileName, new ValidationConfiguration[3]
+        {
+            new ValidationConfiguration
+            {
+                Id = 0,
+                Description = "Leon",
+                Type = "string"
+            },
+            new ValidationConfiguration
+            {
+                Id = 1,
+                Description = "Jane",
+                Type = "boolean"
+            },
+            new ValidationConfiguration
+            {
+                Id = 2,
+                Description = "Harper",
+                Type = "integer"
+            }
+        }));
 
         return errors;
     }

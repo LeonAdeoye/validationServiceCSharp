@@ -7,23 +7,43 @@ namespace validation_service.Services
     {
         private readonly List<string> _listOfErrors;
         private readonly ValidatorFactory _validatorFactory;
+        private readonly EmptyValidator _emptyValidator;
+        //private readonly ILogger<ValidationService> _logger;
+
         public ValidationService()
         {
             _validatorFactory = new();
             _listOfErrors = new();
+            _emptyValidator = new();
         }
 
-        public IEnumerable<string> Validate(string fileName)
+        public IEnumerable<string> Validate(string fileName, ValidationConfiguration[] validationConfigurations)
         {
-            return _listOfErrors;
+            return ValidateRow(0, new string[5] {"Horatio", "Harper", "Leon", "Saori", "Mike"}, validationConfigurations);
         }
 
-        public IEnumerable<String> ValidateRow(string[] columnValues, ValidationConfiguration[] validationConfigurations)
+        public IEnumerable<String> ValidateRow(int rowIndex, string[] columnValues, ValidationConfiguration[] validationConfigurations)
         {
             List<string> listOfErrors = new();
             for (int columnIndex = 0; columnIndex < columnValues.Length; columnIndex++)
             {
+                for(int configurationIndex = columnIndex; configurationIndex < validationConfigurations.Length; configurationIndex++)
+                {
+                    ValidationConfiguration currentValidationConfiguration = validationConfigurations[configurationIndex];
+                    if (columnIndex == currentValidationConfiguration.Id)
+                    {
+                        Console.WriteLine(String.Format("Validating columnIndex: {0} using configurationIndex: {1}", columnIndex, configurationIndex));
+                        string value = columnValues[columnIndex];
+                        if (_emptyValidator.validate(value, currentValidationConfiguration) == "" && value == "")
+                            continue;
 
+                        string result = ValidateColumn(value, currentValidationConfiguration);
+                        if (result != "")
+                            listOfErrors.Add(EnrichErrorWithLocation(rowIndex, columnIndex, result));
+                    }
+                    else
+                        break;
+                }
             }
             return listOfErrors;
         }
@@ -31,12 +51,15 @@ namespace validation_service.Services
         private string ValidateColumn(string value, ValidationConfiguration validationConfiguration)
         {
             IValidator? validator = _validatorFactory.getInstance(validationConfiguration.Type);
-            return validator.validate(value, validationConfiguration);
+            if (validator != null)
+                return validator.validate(value, validationConfiguration);
+            else
+                return String.Format("Validator for type {0} not found", validationConfiguration.Type);
         }
 
-        private string EnrichErrorWithLocation(int rowIndex, int columnIndex, string error)
+        private static string EnrichErrorWithLocation(int rowIndex, int columnIndex, string error)
         {
-            return String.Format("Validation error at row [{0}] and column [{1}]: {2} ", rowIndex, columnIndex, error);
+            return String.Format("Validation error at row: {0} and column: {1} => {2} ", rowIndex, columnIndex, error);
         }
     }
 }

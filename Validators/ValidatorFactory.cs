@@ -9,9 +9,9 @@
 
     internal class ValidatorFactory
     {
-        private readonly BooleanValidator booleanValidator = new BooleanValidator();
-        private readonly StringValidator stringValidator = new StringValidator();
-        private readonly IntegerValidator integerValidator = new IntegerValidator();
+        private readonly BooleanValidator booleanValidator = new();
+        private readonly StringValidator stringValidator = new();
+        private readonly IntegerValidator integerValidator = new();
 
         public static T ParseEnum<T>(string value)
         {
@@ -20,7 +20,7 @@
 
         public IValidator? getInstance(string validatorType)
         {
-            switch (ParseEnum<ValidatorTypeEnum>(validatorType))
+            switch (ParseEnum<ValidatorTypeEnum>(validatorType.ToUpper()))
             {
                 case ValidatorTypeEnum.BOOLEAN:
                     return booleanValidator;
