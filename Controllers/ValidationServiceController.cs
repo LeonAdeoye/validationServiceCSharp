@@ -13,7 +13,7 @@ public class ValidationServiceController : ControllerBase
     public ValidationServiceController(ILogger<ValidationServiceController> logger, IValidationService validationService)
     {
         _logger = logger;
-        _validationService = validationService;
+        _validationService = new ValidationService();
     }
 
     [HttpPost(Name = "PostValidate")]
