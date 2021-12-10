@@ -4,7 +4,7 @@ using validation_service.Services;
 namespace validation_service.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("validate")]
 public class ValidationServiceController : ControllerBase
 {
     private readonly ILogger<ValidationServiceController> _logger;
