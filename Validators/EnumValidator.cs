@@ -6,7 +6,7 @@ namespace validation_service.Validators
     {
         public string validate(string value, ValidationConfiguration validationConfiguration)
         {
-            return "";
+            return String.Empty;
         }
     }
 }

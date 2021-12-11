@@ -9,7 +9,7 @@ namespace validation_service.Validators
             bool result = int.TryParse(value, out _);
             if (!result)
                 return "Cannot validate value: " + value + " as an integer.";
-            return "";
+            return String.Empty;
         }
     }
 }

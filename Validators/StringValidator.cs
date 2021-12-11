@@ -9,7 +9,7 @@ namespace validation_service.Validators
         private readonly Regex lowerCaseRegex = new Regex("^[0-9a-z\\W] *$");
         public string validate(string value, ValidationConfiguration validationConfiguration)
         {
-            if(value != null && validationConfiguration.StringFormat != null && validationConfiguration.StringFormat != "")
+            if(value != null && validationConfiguration.StringFormat != null && validationConfiguration.StringFormat != String.Empty)
             {
                 if (validationConfiguration.StringFormat == "UPPERCASE" && !upperCaseRegex.IsMatch(value))
                     return "Cannot validate value: " + value + " as a uppercase string.";
@@ -17,7 +17,7 @@ namespace validation_service.Validators
                 if (validationConfiguration.StringFormat == "LOWERCASE" && !lowerCaseRegex.IsMatch(value))
                     return "Cannot validate value: " + value + " as a lowercase string.";
             }
-            return "";
+            return String.Empty;
         }
     }
 }

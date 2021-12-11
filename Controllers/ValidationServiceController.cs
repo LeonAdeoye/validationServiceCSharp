@@ -22,7 +22,7 @@ public class ValidationServiceController : ControllerBase
     {
         List<string> errors = new();
 
-        if(fileName == null || fileName == "")
+        if(fileName == null || fileName == String.Empty)
         {
             _logger.LogError("Filename is invalid");
             errors.Add("filename is invalid");

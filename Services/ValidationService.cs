@@ -34,14 +34,14 @@ namespace validation_service.Services
                         string value = columnValues[columnIndex];
                         string error = _emptyValidator.validate(value, currentValidationConfiguration);
                         
-                        if(error == "" && value == "")
+                        if(error == String.Empty && value == String.Empty)
                             continue;
 
-                        if (error != "")
+                        if (error != String.Empty)
                             listOfErrors.Add(PrefixErrorWithLocation(rowIndex, columnIndex, error));
 
                         error = ValidateColumn(value, currentValidationConfiguration);
-                        if (error != "")
+                        if (error != String.Empty)
                             listOfErrors.Add(PrefixErrorWithLocation(rowIndex, columnIndex, error));
                     }
                     else

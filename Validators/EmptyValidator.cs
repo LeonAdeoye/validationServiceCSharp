@@ -6,9 +6,9 @@ namespace validation_service.Validators
     {
         public string validate(string value, ValidationConfiguration validationConfiguration)
         {
-            if (!validationConfiguration.CanBeEmpty && value == "")
+            if (!validationConfiguration.CanBeEmpty && value == String.Empty)
                 return "Value cannot be empty and yet it is";
-            return "";
+            return String.Empty;
 
         }
     }
