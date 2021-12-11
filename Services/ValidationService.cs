@@ -53,6 +53,9 @@ namespace validation_service.Services
 
         private string ValidateColumn(string value, ValidationConfiguration validationConfiguration)
         {
+            if (validationConfiguration.Type == null)
+                return String.Empty;
+
             IValidator? validator = _validatorFactory.getInstance(validationConfiguration.Type);
             if (validator != null)
                 return validator.validate(value, validationConfiguration);

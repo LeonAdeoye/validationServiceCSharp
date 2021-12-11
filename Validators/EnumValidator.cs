@@ -6,7 +6,10 @@ namespace validation_service.Validators
     {
         public string validate(string value, ValidationConfiguration validationConfiguration)
         {
-            return String.Empty;
+            if(validationConfiguration.Enumerations != null && validationConfiguration.Enumerations.Split(',').Contains(value))
+                return String.Empty;
+            else
+                return String.Format("Value {0} not found in enumeration list: {1}", value, validationConfiguration.Enumerations);
         }
     }
 }
