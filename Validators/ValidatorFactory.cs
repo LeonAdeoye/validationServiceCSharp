@@ -27,7 +27,7 @@
             return (T)Enum.Parse(typeof(T), value.ToUpper(), true);
         }
 
-        public IValidator? getInstance(string validatorType)
+        public IValidator? GetInstance(string validatorType)
         {
             switch (ParseEnum<ValidatorTypeEnum>(validatorType))
             {

@@ -56,7 +56,7 @@ namespace validation_service.Services
             if (validationConfiguration.Type == null)
                 return String.Empty;
 
-            IValidator? validator = _validatorFactory.getInstance(validationConfiguration.Type);
+            IValidator? validator = _validatorFactory.GetInstance(validationConfiguration.Type);
             if (validator != null)
                 return validator.Validate(value, validationConfiguration);
             else
