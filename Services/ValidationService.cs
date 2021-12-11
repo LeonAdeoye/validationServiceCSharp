@@ -19,7 +19,7 @@ namespace validation_service.Services
 
         public IEnumerable<string> Validate(string fileName, ValidationConfiguration[] validationConfigurations)
         {
-            return ValidateRow(0, new string[5] {"Horatio", "Harper", "Leon", "Saori", "Mike"}, validationConfigurations);
+            return ValidateRow(0, new string[5] {"Horatio", "", "", "", "Mike"}, validationConfigurations);
         }
 
         public IEnumerable<String> ValidateRow(int rowIndex, string[] columnValues, ValidationConfiguration[] validationConfigurations)
@@ -34,12 +34,17 @@ namespace validation_service.Services
                     {
                         Console.WriteLine(String.Format("Validating columnIndex: {0} using configurationIndex: {1}", columnIndex, configurationIndex));
                         string value = columnValues[columnIndex];
-                        if (_emptyValidator.validate(value, currentValidationConfiguration) == "" && value == "")
+                        string error = _emptyValidator.validate(value, currentValidationConfiguration);
+                        
+                        if(error == "" && value == "")
                             continue;
 
-                        string result = ValidateColumn(value, currentValidationConfiguration);
-                        if (result != "")
-                            listOfErrors.Add(EnrichErrorWithLocation(rowIndex, columnIndex, result));
+                        if (error != "")
+                            listOfErrors.Add(PrefixErrorWithLocation(rowIndex, columnIndex, error));
+
+                        error = ValidateColumn(value, currentValidationConfiguration);
+                        if (error != "")
+                            listOfErrors.Add(PrefixErrorWithLocation(rowIndex, columnIndex, error));
                     }
                     else
                         break;
@@ -57,7 +62,7 @@ namespace validation_service.Services
                 return String.Format("Validator for type {0} not found", validationConfiguration.Type);
         }
 
-        private static string EnrichErrorWithLocation(int rowIndex, int columnIndex, string error)
+        private static string PrefixErrorWithLocation(int rowIndex, int columnIndex, string error)
         {
             return String.Format("Validation error at row: {0} and column: {1} => {2} ", rowIndex, columnIndex, error);
         }

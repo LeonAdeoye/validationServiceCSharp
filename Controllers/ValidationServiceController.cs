@@ -35,19 +35,22 @@ public class ValidationServiceController : ControllerBase
             {
                 Id = 0,
                 Description = "Leon",
-                Type = "string"
+                Type = "string",
+                CanBeEmpty = true,
             },
             new ValidationConfiguration
             {
                 Id = 1,
                 Description = "Jane",
-                Type = "boolean"
+                Type = "boolean",
+                CanBeEmpty = false
             },
             new ValidationConfiguration
             {
                 Id = 2,
                 Description = "Harper",
-                Type = "integer"
+                Type = "integer",
+                CanBeEmpty = false
             }
         }));
 
