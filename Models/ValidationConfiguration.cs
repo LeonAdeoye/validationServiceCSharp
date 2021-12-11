@@ -1,7 +1,11 @@
 ﻿namespace validation_service.Models
 {
-    public record ValidationConfiguration
+    public record ValidationConfiguration : Comparer<ValidationConfiguration>
     {
+        public ValidationConfiguration()
+        {
+        }
+
         public int Id
         {
             get;
@@ -41,6 +45,17 @@
         {
             get;
             set;
+        }
+
+        public string[] NestedMatches
+        {
+            get;
+            set;
+        }
+
+        public override int Compare(ValidationConfiguration? x, ValidationConfiguration? y)
+        {
+            throw new NotImplementedException();
         }
     }
 }

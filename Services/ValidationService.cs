@@ -5,7 +5,6 @@ namespace validation_service.Services
 {
     public class ValidationService : IValidationService
     {
-        private readonly List<string> _listOfErrors;
         private readonly ValidatorFactory _validatorFactory;
         private readonly EmptyValidator _emptyValidator;
         //private readonly ILogger<ValidationService> _logger;
@@ -13,7 +12,6 @@ namespace validation_service.Services
         public ValidationService()
         {
             _validatorFactory = new();
-            _listOfErrors = new();
             _emptyValidator = new();
         }
 
