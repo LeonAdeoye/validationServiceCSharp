@@ -4,7 +4,7 @@ namespace validation_service.Validators
 {
     internal class RangeValidator : IValidator
     {
-        public string validate(string value, ValidationConfiguration validationConfiguration)
+        public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
             if(validationConfiguration.ValidRange != null && validationConfiguration.ValidRange.Length == 2 &&
                 Int32.TryParse(validationConfiguration.ValidRange[0], out int minValue) && 

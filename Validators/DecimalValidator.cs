@@ -6,7 +6,7 @@ namespace validation_service.Validators
     internal class DecimalValidator : IValidator
     {
         private readonly Regex decimalRegex = new("^[0-9]+(\\.[0-9]+)?$");
-        public string validate(string value, ValidationConfiguration validationConfiguration)
+        public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
             if (decimalRegex.IsMatch(value))
                 return String.Empty;

@@ -4,6 +4,6 @@ namespace validation_service.Validators
 {
     internal interface IValidator
     {
-        public string validate(string value, ValidationConfiguration validationConfiguration);
+        public string Validate(string value, ValidationConfiguration validationConfiguration);
     }
 }

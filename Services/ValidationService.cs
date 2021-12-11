@@ -32,7 +32,7 @@ namespace validation_service.Services
                     {
                         Console.WriteLine(String.Format("Validating columnIndex: {0} using configurationIndex: {1}", columnIndex, configurationIndex));
                         string value = columnValues[columnIndex];
-                        string error = _emptyValidator.validate(value, currentValidationConfiguration);
+                        string error = _emptyValidator.Validate(value, currentValidationConfiguration);
                         
                         if(error == String.Empty && value == String.Empty)
                             continue;
@@ -58,7 +58,7 @@ namespace validation_service.Services
 
             IValidator? validator = _validatorFactory.getInstance(validationConfiguration.Type);
             if (validator != null)
-                return validator.validate(value, validationConfiguration);
+                return validator.Validate(value, validationConfiguration);
             else
                 return String.Format("Validator for type {0} not found", validationConfiguration.Type);
         }

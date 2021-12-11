@@ -7,7 +7,7 @@ namespace validation_service.Validators
     {  
         private readonly Regex upperCaseRegex = new Regex("^[0-9A-Z\\W] *$");
         private readonly Regex lowerCaseRegex = new Regex("^[0-9a-z\\W] *$");
-        public string validate(string value, ValidationConfiguration validationConfiguration)
+        public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
             if(value != null && validationConfiguration.StringFormat != null && validationConfiguration.StringFormat != String.Empty)
             {

@@ -4,7 +4,7 @@ namespace validation_service.Validators
 {
     internal class IntegerValidator : IValidator
     {
-        public string validate(String value, ValidationConfiguration validationConfiguration)
+        public string Validate(String value, ValidationConfiguration validationConfiguration)
         {
             bool result = int.TryParse(value, out _);
             if (!result)

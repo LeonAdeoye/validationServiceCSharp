@@ -4,7 +4,7 @@ namespace validation_service.Validators
 {
     internal class BooleanValidator : IValidator
     {
-        public string validate(string value, ValidationConfiguration validationConfiguration)
+        public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
             bool result = bool.TryParse(value, out _);
             if (!result)

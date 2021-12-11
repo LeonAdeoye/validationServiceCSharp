@@ -6,7 +6,7 @@ namespace validation_service.Validators
     internal class CurrencyValidator : IValidator
     {
         private readonly Regex currencyRegex = new("^[A-Z]{3}$");
-        public string validate(string value, ValidationConfiguration validationConfiguration)
+        public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
             if (currencyRegex.IsMatch(value))
                 return String.Empty;
