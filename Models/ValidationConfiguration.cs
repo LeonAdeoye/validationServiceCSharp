@@ -54,5 +54,10 @@
             get;
             set;
         }
+
+        public override string ToString()
+        {
+            return String.Format("ValidationConfiguration={\nId:{0},\nDescription:{1},\nCanBeEmpty:{2},\nType:{3}\n}", Id, Description, CanBeEmpty, Type);
+        }
     }
 }

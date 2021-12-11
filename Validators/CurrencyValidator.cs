@@ -3,15 +3,15 @@ using validation_service.Models;
 
 namespace validation_service.Validators
 {
-    internal class DecimalValidator : IValidator
+    internal class CurrencyValidator : IValidator
     {
-        private readonly Regex decimalRegex = new("^[0-9]+(\\.[0-9]+)?$");
+        private readonly Regex currencyRegex = new("^[A-Z]{3}$");
         public string validate(string value, ValidationConfiguration validationConfiguration)
         {
-            if (decimalRegex.IsMatch(value))
+            if (currencyRegex.IsMatch(value))
                 return String.Empty;
             else
-                return String.Format("The value: {0} cannot be validated as a decimal", value);
+                return String.Format("The value: {0} cannot be validated as a currency", value);
         }
     }
 }
