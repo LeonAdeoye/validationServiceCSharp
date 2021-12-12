@@ -6,7 +6,7 @@ namespace validation_service.Validators
     {
         public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
-            bool result = bool.TryParse(value, out _);
+            var result = bool.TryParse(value, out _);
             if (!result)
                 return "Cannot validate value: " + value + " as a boolean.";
             return String.Empty; ;

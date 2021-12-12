@@ -1,3 +1,4 @@
+using System.Data;
 using validation_service.Models;
 using validation_service.Validators;
 
@@ -5,43 +6,52 @@ namespace validation_service.Services
 {
     public class ValidationService : IValidationService
     {
-        private readonly ValidatorFactory _validatorFactory;
-        private readonly EmptyValidator _emptyValidator;
+        private readonly ValidatorFactory validatorFactory;
+        private readonly EmptyValidator emptyValidator;
         //private readonly ILogger<ValidationService> _logger;
 
         public ValidationService()
         {
-            _validatorFactory = new();
-            _emptyValidator = new();
+            validatorFactory = new();
+            emptyValidator = new();
+        }
+
+        private void LoadFile(string fileName)
+        {
+            // TODO load CSV file. @"D:\CSVFolder\CSVFile.csv"
+            var csvTable = new DataTable();
+            var csvReader = new CsvReader.CsvReader(new StreamReader(File.OpenRead(fileName)), true);
+            csvTable.Load(csvReader);
         }
 
         public IEnumerable<string> Validate(string fileName, ValidationConfiguration[] validationConfigurations)
         {
+            LoadFile(fileName);
             return ValidateRow(0, new string[5] {"Horatio", "", "", "", "Mike"}, validationConfigurations);
         }
 
-        public IEnumerable<String> ValidateRow(int rowIndex, string[] columnValues, ValidationConfiguration[] validationConfigurations)
+        public IEnumerable<string> ValidateRow(int rowIndex, string[] columnValues, ValidationConfiguration[] validationConfigurations)
         {
             List<string> listOfErrors = new();
-            for (int columnIndex = 0; columnIndex < columnValues.Length; columnIndex++)
+            for (var columnIndex = 0; columnIndex < columnValues.Length; columnIndex++)
             {
-                for(int configurationIndex = columnIndex; configurationIndex < validationConfigurations.Length; configurationIndex++)
+                for(var configurationIndex = columnIndex; configurationIndex < validationConfigurations.Length; configurationIndex++)
                 {
-                    ValidationConfiguration currentValidationConfiguration = validationConfigurations[configurationIndex];
+                    var currentValidationConfiguration = validationConfigurations[configurationIndex];
                     if (columnIndex == currentValidationConfiguration.Id)
                     {
-                        Console.WriteLine(String.Format("Validating columnIndex: {0} using configurationIndex: {1}", columnIndex, configurationIndex));
-                        string value = columnValues[columnIndex];
-                        string error = _emptyValidator.Validate(value, currentValidationConfiguration);
+                        Console.WriteLine($"Validating columnIndex: {columnIndex} using configurationIndex: {configurationIndex}");
+                        var value = columnValues[columnIndex];
+                        var error = emptyValidator.Validate(value, currentValidationConfiguration);
                         
-                        if(error == String.Empty && value == String.Empty)
+                        if(error == string.Empty && value == string.Empty)
                             continue;
 
-                        if (error != String.Empty)
+                        if (error != string.Empty)
                             listOfErrors.Add(PrefixErrorWithLocation(rowIndex, columnIndex, error));
 
                         error = ValidateColumn(value, currentValidationConfiguration);
-                        if (error != String.Empty)
+                        if (error != string.Empty)
                             listOfErrors.Add(PrefixErrorWithLocation(rowIndex, columnIndex, error));
                     }
                     else
@@ -54,18 +64,15 @@ namespace validation_service.Services
         private string ValidateColumn(string value, ValidationConfiguration validationConfiguration)
         {
             if (validationConfiguration.Type == null)
-                return String.Empty;
+                return string.Empty;
 
-            IValidator? validator = _validatorFactory.GetInstance(validationConfiguration.Type);
-            if (validator != null)
-                return validator.Validate(value, validationConfiguration);
-            else
-                return String.Format("Validator for type {0} not found", validationConfiguration.Type);
+            var validator = validatorFactory.GetInstance(validationConfiguration.Type);
+            return validator != null ? validator.Validate(value, validationConfiguration) : $"Validator for type {validationConfiguration.Type} not found";
         }
 
         private static string PrefixErrorWithLocation(int rowIndex, int columnIndex, string error)
         {
-            return String.Format("Validation error at row: {0} and column: {1} => {2} ", rowIndex, columnIndex, error);
+            return $"Validation error at row: {rowIndex} and column: {columnIndex} => {error}";
         }
     }
 }

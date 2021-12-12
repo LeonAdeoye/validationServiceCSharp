@@ -1,6 +1,6 @@
 ﻿namespace validation_service.Models
 {
-    public record ValidationConfiguration //: Comparer<ValidationConfiguration>
+    public record ValidationConfiguration// : Comparer<ValidationConfiguration>
     {
         public int Id
         {
@@ -57,7 +57,7 @@
 
         public override string ToString()
         {
-            return String.Format("ValidationConfiguration={\nId:{0},\nDescription:{1},\nCanBeEmpty:{2},\nType:{3}\n}", Id, Description, CanBeEmpty, Type);
+            return $"ValidationConfiguration=\nId:{Id},\nDescription:{Description},\nCanBeEmpty:{CanBeEmpty},\nType:{Type}\n";
         }
     }
 }

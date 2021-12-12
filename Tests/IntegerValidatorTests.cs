@@ -11,21 +11,21 @@ public class IntegerValidatorTests
     [Test]
     public void Validate_ValidInput_ReturnsEmptyString()
     {
-        string result = integerValidator.Validate("5559", new Models.ValidationConfiguration { Type = "integer" });
-        Assert.AreEqual(String.Empty, result);
+        var result = integerValidator.Validate("5559", new Models.ValidationConfiguration { Type = "integer" });
+        Assert.AreEqual(string.Empty, result);
     }
 
     [Test]
     public void Validate_InvalidInput_ReturnsErrorString()
     {
-        string result = integerValidator.Validate("TRUE", new Models.ValidationConfiguration { Type = "integer" });
-        Assert.AreEqual("The value: TRUE does not validate into an integer", result);
+        var result = integerValidator.Validate("TRUE", new Models.ValidationConfiguration { Type = "integer" });
+        Assert.AreEqual("Cannot validate value: TRUE as an integer.", result);
     }
 
     [Test]
     public void Validate_EmptyInput_ReturnsErrorString()
     {
-        string result = integerValidator.Validate("", new Models.ValidationConfiguration { Type = "integer" });
-        Assert.AreEqual("The value: does not validate into an integer", result);
+        var result = integerValidator.Validate("", new Models.ValidationConfiguration { Type = "integer" });
+        Assert.AreEqual("Cannot validate value:  as an integer.", result);
     }
 }
