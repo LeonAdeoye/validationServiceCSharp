@@ -1,6 +1,6 @@
 ﻿namespace validation_service.Models
 {
-    public record ValidationConfiguration// : Comparer<ValidationConfiguration>
+    public record ValidationConfiguration : IComparer<ValidationConfiguration>
     {
         public int Id
         {
@@ -53,6 +53,12 @@
         {
             get;
             set;
+        }
+
+        public int Compare(ValidationConfiguration? x, ValidationConfiguration? y)
+        {
+            if (x == null && y == null)
+            return x.Id.CompareTo(y.Id);
         }
 
         public override string ToString()

@@ -1,3 +1,6 @@
+
+
+
 using System.Data;
 using validation_service.Models;
 using validation_service.Validators;
@@ -24,14 +27,16 @@ namespace validation_service.Services
             csvTable.Load(csvReader);
         }
 
+
         public IEnumerable<string> Validate(string fileName, ValidationConfiguration[] validationConfigurations)
         {
             LoadFile(fileName);
-            return ValidateRow(0, new string[5] {"Horatio", "", "", "", "Mike"}, validationConfigurations);
+            return ValidateRow(0, new string[5] {"Horatio", "", "", "", "Mike"}, validationConfigurations.OrderBy(x => x.Id).ToArray());
         }
 
         public IEnumerable<string> ValidateRow(int rowIndex, string[] columnValues, ValidationConfiguration[] validationConfigurations)
         {
+            
             List<string> listOfErrors = new();
             for (var columnIndex = 0; columnIndex < columnValues.Length; columnIndex++)
             {
