@@ -8,28 +8,28 @@ namespace validation_service.Controllers;
 [Route("validate")]
 public class ValidationServiceController : ControllerBase
 {
-    private readonly ILogger<ValidationServiceController> _logger;
-    private readonly IValidationService _validationService;
+    private readonly ILogger<ValidationServiceController> logger;
+    private readonly IValidationService validationService;
 
     public ValidationServiceController(ILogger<ValidationServiceController> logger)
     {
-        _logger = logger;
-        _validationService = new ValidationService();
+        this.logger = logger;
+        validationService = new ValidationService();
     }
 
     [HttpPost(Name = "PostValidate")]
-    public IEnumerable<string> Post(string fileName)
+    public string Post(ValidationRequest validationRequest)
     {
         List<string> errors = new();
 
-        if(fileName == null || fileName == String.Empty)
+        if (validationRequest.FilePath is null or "")
         {
-            _logger.LogError("Filename is invalid");
-            errors.Add("filename is invalid");
-            return errors;
+            logger.LogError("FilePath is invalid");
+            errors.Add("FilePath is invalid");
+            return new ValidationResponse(errors).ToString();
         }
 
-        errors.AddRange(_validationService.Validate(fileName, false, '|', new ValidationConfiguration[3]
+        errors.AddRange(validationService.Validate(validationRequest.FilePath, validationRequest.HasHeader, validationRequest.Delimiter, new ValidationConfiguration[5]
         {
             new ValidationConfiguration
             {
@@ -51,9 +51,23 @@ public class ValidationServiceController : ControllerBase
                 Description = "Harper",
                 Type = "integer",
                 CanBeEmpty = false
+            },
+            new ValidationConfiguration
+            {
+                Id = 3,
+                Description = "Harper",
+                Type = "integer",
+                CanBeEmpty = false
+            },
+            new ValidationConfiguration
+            {
+                Id = 4,
+                Description = "Harper",
+                Type = "integer",
+                CanBeEmpty = false
             }
         }));
 
-        return errors;
+        return new ValidationResponse(errors).ToString();
     }
 }

@@ -32,9 +32,16 @@ namespace validation_service.Services
         public IEnumerable<string> ValidateRow(long rowIndex, string[] columnValues, ValidationConfiguration[] validationConfigurations)
         {
             List<string> listOfErrors = new();
+
+            if (columnValues.Length != validationConfigurations.Length)
+            {
+                listOfErrors.Add($"The number of column values does not match the number of validation configurations at row: {rowIndex}");
+                return listOfErrors;
+            }
+
             for (var columnIndex = 0; columnIndex < columnValues.Length; columnIndex++)
             {
-                for(var configurationIndex = columnIndex; configurationIndex < validationConfigurations.Length; configurationIndex++)
+                for (var configurationIndex = columnIndex; configurationIndex < validationConfigurations.Length; configurationIndex++)
                 {
                     var currentValidationConfiguration = validationConfigurations[configurationIndex];
                     if (columnIndex == currentValidationConfiguration.Id)
@@ -42,8 +49,8 @@ namespace validation_service.Services
                         Console.WriteLine($"Validating columnIndex: {columnIndex} using configurationIndex: {configurationIndex} using thread with ID: {CurrentThread.ManagedThreadId}");
                         var value = columnValues[columnIndex];
                         var error = emptyValidator.Validate(value, currentValidationConfiguration);
-                        
-                        if(error == string.Empty && value == string.Empty)
+
+                        if (error == string.Empty && value == string.Empty)
                             continue;
 
                         if (error != string.Empty)
