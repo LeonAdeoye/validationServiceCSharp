@@ -29,7 +29,7 @@ public class ValidationServiceController : ControllerBase
             return errors;
         }
 
-        errors.AddRange(_validationService.Validate(fileName, new ValidationConfiguration[3]
+        errors.AddRange(_validationService.Validate(fileName, false, '|', new ValidationConfiguration[3]
         {
             new ValidationConfiguration
             {

@@ -1,9 +1,6 @@
-
-
-
-using System.Data;
 using validation_service.Models;
 using validation_service.Validators;
+using static System.Threading.Thread;
 
 namespace validation_service.Services
 {
@@ -19,24 +16,21 @@ namespace validation_service.Services
             emptyValidator = new();
         }
 
-        private void LoadFile(string fileName)
+        public IEnumerable<string> Validate(string fileName, bool hasHeader, char delimiter, ValidationConfiguration[] validationConfigurations)
         {
-            // TODO load CSV file. @"D:\CSVFolder\CSVFile.csv"
-            var csvTable = new DataTable();
-            var csvReader = new CsvReader.CsvReader(new StreamReader(File.OpenRead(fileName)), true);
-            csvTable.Load(csvReader);
+            List<string> errors = new();
+
+            Parallel.ForEach(File.ReadLines(fileName), (row, _, rowIndex) =>
+            {
+                if(!hasHeader || rowIndex != 0)
+                    errors.AddRange(ValidateRow(rowIndex, row.Split(delimiter), validationConfigurations.OrderBy(x => x.Id).ToArray()));
+            });
+
+            return errors;
         }
 
-
-        public IEnumerable<string> Validate(string fileName, ValidationConfiguration[] validationConfigurations)
+        public IEnumerable<string> ValidateRow(long rowIndex, string[] columnValues, ValidationConfiguration[] validationConfigurations)
         {
-            LoadFile(fileName);
-            return ValidateRow(0, new string[5] {"Horatio", "", "", "", "Mike"}, validationConfigurations.OrderBy(x => x.Id).ToArray());
-        }
-
-        public IEnumerable<string> ValidateRow(int rowIndex, string[] columnValues, ValidationConfiguration[] validationConfigurations)
-        {
-            
             List<string> listOfErrors = new();
             for (var columnIndex = 0; columnIndex < columnValues.Length; columnIndex++)
             {
@@ -45,7 +39,7 @@ namespace validation_service.Services
                     var currentValidationConfiguration = validationConfigurations[configurationIndex];
                     if (columnIndex == currentValidationConfiguration.Id)
                     {
-                        Console.WriteLine($"Validating columnIndex: {columnIndex} using configurationIndex: {configurationIndex}");
+                        Console.WriteLine($"Validating columnIndex: {columnIndex} using configurationIndex: {configurationIndex} using thread with ID: {CurrentThread.ManagedThreadId}");
                         var value = columnValues[columnIndex];
                         var error = emptyValidator.Validate(value, currentValidationConfiguration);
                         
@@ -75,7 +69,7 @@ namespace validation_service.Services
             return validator != null ? validator.Validate(value, validationConfiguration) : $"Validator for type {validationConfiguration.Type} not found";
         }
 
-        private static string PrefixErrorWithLocation(int rowIndex, int columnIndex, string error)
+        private static string PrefixErrorWithLocation(long rowIndex, int columnIndex, string error)
         {
             return $"Validation error at row: {rowIndex} and column: {columnIndex} => {error}";
         }
