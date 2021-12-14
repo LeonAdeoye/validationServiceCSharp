@@ -15,9 +15,9 @@ namespace validation_service.Validators
             switch (validationConfiguration.StringFormat)
             {
                 case "UPPERCASE" when !upperCaseRegex.IsMatch(value):
-                    return "Cannot validate value: " + value + " as a uppercase string.";
+                    return $"Cannot validate value: {value} as a uppercase string.";
                 case "LOWERCASE" when !lowerCaseRegex.IsMatch(value):
-                    return "Cannot validate value: " + value + " as a lowercase string.";
+                    return $"Cannot validate value: {value} as a lowercase string.";
             }
             return string.Empty;
         }

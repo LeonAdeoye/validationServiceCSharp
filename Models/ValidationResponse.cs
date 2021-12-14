@@ -5,25 +5,27 @@ namespace validation_service.Models
 {
     public record ValidationResponse
     {
-        private readonly List<string> errors;
-        private readonly string result;
+        [JsonInclude]
+        public List<string> Errors;
+        [JsonInclude]
+        public string Result;
 
         public ValidationResponse(List<string> errors)
         {
-            this.errors = errors;
-            result = errors.Count == 0 ? "SUCCESS" : "FAILURE";
+            this.Errors = errors;
+            Result = errors.Count == 0 ? "SUCCESS" : "FAILURE";
         }
 
         public override string ToString()
         {
             StringBuilder sb = new();
-            for (var index = 0; index < errors.Count; ++index)
+            for (var index = 0; index < Errors.Count; ++index)
             {
-                sb.AppendFormat($"\"{errors[index]}\"");
-                if (index < errors.Count - 1)
+                sb.AppendFormat($"\"{Errors[index]}\"");
+                if (index < Errors.Count - 1)
                     sb.Append(", ");
             }
-            return $"{{\"RESULT\": \"{result}\", \"ERRORS\": [{sb}]}}";
+            return $"{{\"RESULT\": \"{Result}\", \"ERRORS\": [{sb}]}}";
         }
     }
 }

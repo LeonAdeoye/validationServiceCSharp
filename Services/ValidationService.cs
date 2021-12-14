@@ -77,7 +77,7 @@ namespace validation_service.Services
 
         private static string PrefixErrorWithLocation(long rowIndex, int columnIndex, string error)
         {
-            return $"Validation error at row: {rowIndex} and column: {columnIndex} => {error}";
+            return $"Row: {rowIndex} and column: {columnIndex} has a validation error: {error}";
         }
     }
 }

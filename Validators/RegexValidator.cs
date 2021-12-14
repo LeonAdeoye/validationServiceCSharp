@@ -8,13 +8,10 @@ namespace validation_service.Validators
         public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
             if(validationConfiguration.RegexValue == null)
-                return String.Empty;
+                return string.Empty;
 
             Regex regex = new(validationConfiguration.RegexValue);
-            if (regex.IsMatch(value))
-                return String.Empty;
-            else
-                return String.Format("The value: {0} does not match regex: {1}", value, validationConfiguration.RegexValue);
+            return regex.IsMatch(value) ? string.Empty : $"The value: {value} does not match regex: {validationConfiguration.RegexValue}";
         }
     }
 }

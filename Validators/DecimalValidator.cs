@@ -8,10 +8,7 @@ namespace validation_service.Validators
         private readonly Regex decimalRegex = new("^[0-9]+(\\.[0-9]+)?$");
         public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
-            if (decimalRegex.IsMatch(value))
-                return String.Empty;
-            else
-                return String.Format("The value: {0} cannot be validated as a decimal", value);
+            return decimalRegex.IsMatch(value) ? string.Empty : $"The value: {value} cannot be validated as a decimal";
         }
     }
 }

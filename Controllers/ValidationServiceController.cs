@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using validation_service.Models;
 using validation_service.Services;
@@ -26,7 +27,7 @@ public class ValidationServiceController : ControllerBase
         {
             logger.LogError("FilePath is invalid");
             errors.Add("FilePath is invalid");
-            return new ValidationResponse(errors).ToString();
+            return JsonSerializer.Serialize<ValidationResponse>(new ValidationResponse(errors));
         }
 
         errors.AddRange(validationService.Validate(validationRequest.FilePath, validationRequest.HasHeader, validationRequest.Delimiter, new ValidationConfiguration[5]
@@ -68,6 +69,6 @@ public class ValidationServiceController : ControllerBase
             }
         }));
 
-        return new ValidationResponse(errors).ToString();
+        return JsonSerializer.Serialize<ValidationResponse>(new ValidationResponse(errors));
     }
 }
