@@ -8,7 +8,8 @@
         DECIMAL,
         RANGE,
         ENUM,
-        REGEX
+        REGEX,
+        CURRENCY
     }
 
     internal class ValidatorFactory
@@ -21,6 +22,7 @@
         private readonly RangeValidator rangeValidator = new();
         private readonly RegexValidator regexValidator = new();
         private readonly EnumValidator enumValidator = new();
+        private readonly CurrencyValidator currencyValidator = new();
 
         public static T ParseEnum<T>(string value)
         {
@@ -45,6 +47,8 @@
                     return regexValidator;
                 case ValidatorTypeEnum.RANGE:
                     return rangeValidator;
+                case ValidatorTypeEnum.CURRENCY:
+                    return currencyValidator;
                 default:
                     return null;
             }
