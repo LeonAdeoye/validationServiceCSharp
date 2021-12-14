@@ -8,7 +8,6 @@ namespace validation_service.Services
     {
         private readonly ValidatorFactory validatorFactory;
         private readonly EmptyValidator emptyValidator;
-        //private readonly ILogger<ValidationService> _logger;
 
         public ValidationService()
         {
