@@ -30,44 +30,15 @@ public class ValidationServiceController : ControllerBase
             return JsonSerializer.Serialize<ValidationResponse>(new ValidationResponse(errors));
         }
 
-        errors.AddRange(validationService.Validate(validationRequest.FilePath, validationRequest.HasHeader, validationRequest.Delimiter, new ValidationConfiguration[5]
+        if(validationRequest.Validations == null)
         {
-            new ValidationConfiguration
-            {
-                Id = 0,
-                Description = "Leon",
-                Type = "string",
-                CanBeEmpty = true,
-            },
-            new ValidationConfiguration
-            {
-                Id = 1,
-                Description = "Jane",
-                Type = "boolean",
-                CanBeEmpty = false
-            },
-            new ValidationConfiguration
-            {
-                Id = 2,
-                Description = "Harper",
-                Type = "integer",
-                CanBeEmpty = false
-            },
-            new ValidationConfiguration
-            {
-                Id = 3,
-                Description = "Harper",
-                Type = "integer",
-                CanBeEmpty = false
-            },
-            new ValidationConfiguration
-            {
-                Id = 4,
-                Description = "Harper",
-                Type = "integer",
-                CanBeEmpty = false
-            }
-        }));
+            logger.LogError("Validations cannot be NULL");
+            errors.Add("Validations cannot be NULL");
+            return JsonSerializer.Serialize<ValidationResponse>(new ValidationResponse(errors));
+        }
+
+        errors.AddRange(validationService.Validate(validationRequest.FilePath, validationRequest.HasHeader,
+            validationRequest.Delimiter, validationRequest.Validations));
 
         return JsonSerializer.Serialize<ValidationResponse>(new ValidationResponse(errors));
     }
