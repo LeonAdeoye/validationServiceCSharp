@@ -23,7 +23,7 @@ public class ValidationServiceController : ControllerBase
     {
         List<string> errors = new();
 
-        if (validationRequest.FilePath is null or "")
+        if (string.IsNullOrEmpty(validationRequest.FilePath))
         {
             logger.LogError("FilePath is invalid");
             errors.Add("FilePath is invalid");

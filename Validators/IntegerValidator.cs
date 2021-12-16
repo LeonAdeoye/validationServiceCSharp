@@ -6,10 +6,7 @@ namespace validation_service.Validators
     {
         public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
-            bool result = int.TryParse(value, out _);
-            if (!result)
-                return "Cannot validate value: " + value + " as an integer.";
-            return string.Empty;
+            return int.TryParse(value, out _) ? string.Empty : $"Cannot validate value: {value} as an integer.";
         }
     }
 }

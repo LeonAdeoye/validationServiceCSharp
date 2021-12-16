@@ -24,9 +24,16 @@ namespace validation_service.Models
             set;
         }
 
+        [JsonPropertyName("validations")]
+        public ValidationConfiguration[]? Validations
+        {
+            get;
+            set;
+        }
+
         public override string ToString()
         {
-            return $"ValidationRequest=\nFilePath:{FilePath},\nDelimiter:{Delimiter},\nHasHeader:{HasHeader}";
+            return $"ValidationRequest=\nFilePath:{FilePath},\nDelimiter:{Delimiter},\nHasHeader:{HasHeader},\nValidations:{Validations}";
         }
     }
 }

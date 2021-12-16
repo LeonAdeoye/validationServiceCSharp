@@ -31,27 +31,18 @@
 
         public IValidator? GetInstance(string validatorType)
         {
-            switch (ParseEnum<ValidatorTypeEnum>(validatorType))
+            return ParseEnum<ValidatorTypeEnum>(validatorType) switch
             {
-                case ValidatorTypeEnum.BOOLEAN:
-                    return booleanValidator;
-                case ValidatorTypeEnum.STRING:
-                    return stringValidator;
-                case ValidatorTypeEnum.INTEGER:
-                    return integerValidator;
-                case ValidatorTypeEnum.ENUM:
-                    return enumValidator;
-                case ValidatorTypeEnum.DECIMAL:
-                    return decimalValidator;
-                case ValidatorTypeEnum.REGEX:
-                    return regexValidator;
-                case ValidatorTypeEnum.RANGE:
-                    return rangeValidator;
-                case ValidatorTypeEnum.CURRENCY:
-                    return currencyValidator;
-                default:
-                    return null;
-            }
+                ValidatorTypeEnum.BOOLEAN => booleanValidator,
+                ValidatorTypeEnum.STRING => stringValidator,
+                ValidatorTypeEnum.INTEGER => integerValidator,
+                ValidatorTypeEnum.ENUM => enumValidator,
+                ValidatorTypeEnum.DECIMAL => decimalValidator,
+                ValidatorTypeEnum.REGEX => regexValidator,
+                ValidatorTypeEnum.RANGE => rangeValidator,
+                ValidatorTypeEnum.CURRENCY => currencyValidator,
+                _ => null
+            };
         }
     }
 }

@@ -12,14 +12,12 @@ namespace validation_service.Validators
             if (value == null || validationConfiguration.StringFormat is null or "") 
                 return string.Empty;
 
-            switch (validationConfiguration.StringFormat)
+            return validationConfiguration.StringFormat switch
             {
-                case "UPPERCASE" when !upperCaseRegex.IsMatch(value):
-                    return $"Cannot validate value: {value} as a uppercase string.";
-                case "LOWERCASE" when !lowerCaseRegex.IsMatch(value):
-                    return $"Cannot validate value: {value} as a lowercase string.";
-            }
-            return string.Empty;
+                "UPPERCASE" when !upperCaseRegex.IsMatch(value) => $"Cannot validate value: {value} as a uppercase string.",
+                "LOWERCASE" when !lowerCaseRegex.IsMatch(value) => $"Cannot validate value: {value} as a lowercase string.",
+                _ => string.Empty
+            };
         }
     }
 }
