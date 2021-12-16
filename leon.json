@@ -1,0 +1,42 @@
+{
+  "filePath": "leon.csv",
+  "delimiter": "|",
+  "hasHeader": false,
+  "validations": [
+    {
+      "id": 0,
+      "canBeEmpty": true,
+      "stringFormat": "UPPERCASE",
+      "description": "one",
+      "type": "string"
+    },
+    {
+      "id": 1,
+      "canBeEmpty": true,
+      "stringFormat": "UPPERCASE",
+      "description": "two",
+      "type": "string"
+    },
+    {
+      "id": 2,
+      "canBeEmpty": true,
+      "stringFormat": "UPPERCASE",
+      "description": "three",
+      "type": "string"
+    },
+    {
+      "id": 3,
+      "canBeEmpty": true,
+      "stringFormat": "UPPERCASE",
+      "description": "four",
+      "type": "string"
+    },
+    {
+      "id": 3,
+      "canBeEmpty": true,
+      "stringFormat": "UPPERCASE",
+      "description": "five",
+      "type": "string"
+    }
+  ]
+}
