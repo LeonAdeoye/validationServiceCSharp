@@ -9,7 +9,7 @@ namespace validation_service.Validators
         private readonly Regex lowerCaseRegex = new("^[0-9a-z\\W]*$");
         public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
-            if (value == null || validationConfiguration.StringFormat is null or "") 
+            if (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(validationConfiguration.StringFormat)) 
                 return string.Empty;
 
             return validationConfiguration.StringFormat switch

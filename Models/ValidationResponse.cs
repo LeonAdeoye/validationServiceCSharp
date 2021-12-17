@@ -3,18 +3,12 @@ using System.Text.Json.Serialization;
 
 namespace validation_service.Models
 {
-    public record ValidationResponse
+    public record ValidationResponse(List<string> Errors)
     {
         [JsonInclude]
-        public List<string> Errors;
+        public List<string> Errors = Errors;
         [JsonInclude]
-        public string Result;
-
-        public ValidationResponse(List<string> errors)
-        {
-            this.Errors = errors;
-            Result = errors.Count == 0 ? "SUCCESS" : "FAILURE";
-        }
+        public string Result = Errors.Count == 0 ? "SUCCESS" : "FAILURE";
 
         public override string ToString()
         {
