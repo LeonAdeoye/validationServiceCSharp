@@ -11,8 +11,8 @@ namespace validation_service.Services
 
         public ValidationService()
         {
-            validatorFactory = new();
-            emptyValidator = new();
+            this.validatorFactory = new();
+            this.emptyValidator = new();
         }
 
         public IEnumerable<string> Validate(string fileName, bool hasHeader, char delimiter, ValidationConfiguration[] validationConfigurations)
@@ -71,13 +71,23 @@ namespace validation_service.Services
             if (validationConfiguration.Type == null)
                 return string.Empty;
 
-            var validator = validatorFactory.GetInstance(validationConfiguration.Type);
+            var validator = validatorFactory.GetValidator(validationConfiguration.Type);
             return validator != null ? validator.Validate(value, validationConfiguration) : $"Validator for type {validationConfiguration.Type} not found";
         }
 
         private static string PrefixErrorWithLocation(long rowIndex, int columnIndex, string error)
         {
             return $"Row: {rowIndex} and column: {columnIndex} has a validation error: {error}";
+        }
+
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

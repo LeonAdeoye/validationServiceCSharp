@@ -12,7 +12,7 @@
         CURRENCY
     }
 
-    internal class ValidatorFactory
+    internal class ValidatorFactory : IValidatorFactory
     {
         // TODO use dependency injection
         private readonly BooleanValidator booleanValidator = new();
@@ -24,12 +24,12 @@
         private readonly EnumValidator enumValidator = new();
         private readonly CurrencyValidator currencyValidator = new();
 
-        public static T ParseEnum<T>(string value)
+        private static T ParseEnum<T>(string value)
         {
             return (T)Enum.Parse(typeof(T), value.ToUpper(), true);
         }
 
-        public IValidator? GetInstance(string validatorType)
+        public IValidator? GetValidator(string validatorType)
         {
             return ParseEnum<ValidatorTypeEnum>(validatorType) switch
             {
