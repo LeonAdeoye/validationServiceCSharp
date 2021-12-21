@@ -9,7 +9,7 @@ namespace validation_service.Validators
             if (validationConfiguration.Enumerations != null && validationConfiguration.Enumerations.Split(',').Contains(value))
                 return string.Empty;
             else
-                return $"Value {value} not found in enumeration list: [{validationConfiguration.Enumerations}]";
+                return $"Value: {value} not found in enumeration list: [{validationConfiguration.Enumerations}]";
         }
     }
 }

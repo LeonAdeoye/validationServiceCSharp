@@ -19,7 +19,21 @@ public class EnumValidatorTests
     public void Validate_InvalidInput_ReturnsErrorString()
     {
         var result = enumValidator.Validate("Saori", new Models.ValidationConfiguration { Type = "Enum", Enumerations = "Horatio,Harper" });
-        Assert.AreEqual(result = "Value Saori not found in enumeration list: [Horatio,Harper]", result);
+        Assert.AreEqual("Value: Saori not found in enumeration list: [Horatio,Harper]", result);
+    }
+
+    [Test]
+    public void Validate_InvalidEnumerations_ReturnsErrorString()
+    {
+        var result = enumValidator.Validate("Saori", new Models.ValidationConfiguration { Type = "Enum", Enumerations = "" });
+        Assert.AreEqual("Value: Saori not found in enumeration list: []", result);
+    }
+
+    [Test]
+    public void Validate_InvalidValue_ReturnsErrorString()
+    {
+        var result = enumValidator.Validate("", new Models.ValidationConfiguration { Type = "Enum", Enumerations = "Harper, Horatio" });
+        Assert.AreEqual("Value:  not found in enumeration list: [Harper, Horatio]", result);
     }
 
 }
