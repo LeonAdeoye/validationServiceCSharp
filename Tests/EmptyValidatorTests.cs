@@ -16,7 +16,7 @@ public class EmptyValidatorTests
     }
 
     [Test]
-    public void Validate_InvalidEmptyInput_ReturnsEmptyString()
+    public void Validate_InvalidEmptyInput_ReturnsErrorString()
     {
         var result = emptyValidator.Validate("", new Models.ValidationConfiguration { Type = "string", CanBeEmpty = false });
         Assert.AreEqual("The value cannot be empty and yet it is.", result);
