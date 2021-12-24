@@ -23,7 +23,7 @@ public class RegexValidatorTests
     }
 
     [Test]
-    public void Validate_InvalidInput_ReturnsEmptyString()
+    public void Validate_InvalidInput_ReturnsErrorString()
     {
         var result = regexValidator.Validate("Horatio", new Models.ValidationConfiguration { Type = "regex", RegexValue = "^[0-9]+(\\.[0-9]+)?$" });
         Assert.AreEqual("The value: Horatio does not match regex: ^[0-9]+(\\.[0-9]+)?$", result);
