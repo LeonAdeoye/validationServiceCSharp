@@ -68,7 +68,7 @@ public class ValidationServiceTests
     }
 
     [Test]
-    public void ValidateRow_ValidRow_ReturnsNoErrors()
+    public void ValidateRow_ValidRow_ReturnsTwoErrors()
     {
         var result = validationService.ValidateRow(0, new string[] { "horatio", "HARPER" }, new ValidationConfiguration[]
         {
@@ -88,5 +88,50 @@ public class ValidationServiceTests
         Assert.AreEqual(2, result.Count());
         Assert.AreEqual("Row: 0 and column: 0 has a validation error: Cannot validate value: horatio as a uppercase string.", result.First());
         Assert.AreEqual("Row: 0 and column: 1 has a validation error: Cannot validate value: HARPER as a lowercase string.", result.Last());
+    }
+
+    [Test]
+    public void ValidateRow_InvalidEmptyRow_ReturnsError()
+    {
+        var result = validationService.ValidateRow(0, new string[] { "", "HARPER" }, new ValidationConfiguration[]
+        {
+            new ValidationConfiguration()
+            {
+                Id = 0,
+                Type = "string",
+                StringFormat = "UPPERCASE",
+                CanBeEmpty = false
+            },
+            new ValidationConfiguration()
+            {
+                Id = 1,
+                Type = "string",
+                StringFormat = "UPPERCASE"
+            }
+        });
+        Assert.AreEqual(1, result.Count());
+        Assert.AreEqual("Row: 0 and column: 0 has a validation error: The value cannot be empty and yet it is.", result.First());
+    }
+
+    [Test]
+    public void ValidateRow_ValidEmptyRow_ReturnsError()
+    {
+        var result = validationService.ValidateRow(0, new string[] { "", "HARPER" }, new ValidationConfiguration[]
+        {
+            new ValidationConfiguration()
+            {
+                Id = 0,
+                Type = "string",
+                StringFormat = "UPPERCASE",
+                CanBeEmpty = true
+            },
+            new ValidationConfiguration()
+            {
+                Id = 1,
+                Type = "string",
+                StringFormat = "UPPERCASE"
+            }
+        });
+        Assert.AreEqual(0, result.Count());
     }
 }
