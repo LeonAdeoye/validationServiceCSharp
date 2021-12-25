@@ -25,7 +25,7 @@ public class ValidationServiceTests
     }
 
     [Test]
-    public void ValidateRow_MixedRows_ReturnsOneError()
+    public void ValidateRow_MixedRow_ReturnsOneError()
     {
         var result = validationService.ValidateRow(0, new string[] { "HORATIO", "HARPER" }, new ValidationConfiguration[] 
             { 
@@ -47,7 +47,7 @@ public class ValidationServiceTests
     }
 
     [Test]
-    public void ValidateRow_ValidRows_ReturnsNoErrors()
+    public void ValidateRow_ValidRow_ReturnsNoErrors()
     {
         var result = validationService.ValidateRow(0, new string[] { "HORATIO", "harper" }, new ValidationConfiguration[]
         {
@@ -68,7 +68,7 @@ public class ValidationServiceTests
     }
 
     [Test]
-    public void ValidateRow_ValidRow_ReturnsTwoErrors()
+    public void ValidateRow_ValidRow_ReturnsErrors()
     {
         var result = validationService.ValidateRow(0, new string[] { "horatio", "HARPER" }, new ValidationConfiguration[]
         {
