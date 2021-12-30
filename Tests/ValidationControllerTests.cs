@@ -13,9 +13,16 @@ namespace validation_service.Tests;
 public class ValidationControllerTests
 {
     private readonly ValidationService validationService = new();
-    private readonly HttpClient client = new();
+    private HttpClient client;
     private HttpResponseMessage response;
     private const string ServiceBaseURL = "http://localhost:20099/";
+    private ILogger<ValidationServiceController> logger;
+    private HttpRequestMessage request;
+
+    ValidationControllerTests(ILogger<ValidationServiceController> logger)
+    {
+        this.logger = logger;
+    }
 
     [SetUp]
     public void ReInitializeTest()
@@ -24,23 +31,9 @@ public class ValidationControllerTests
     }
 
     [Test]
-    public void GetAllProductsTest()
+    public void PostValidate()
     {
-        var validationServiceController = new ValidationServiceController()
-        {
-            Request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(ServiceBaseURL + "validate")
-            }
-        };
-        validationServiceController.Request.Properties.Add(HttpPropertyKeys.HttpConfigurationKey, new HttpConfiguration());
 
-        response = validationServiceController.Get();
-
-        var responseResult = JsonConvert.DeserializeObject<List<string>>(response.Content.ReadAsStringAsync().Result);
-        Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-        Assert.AreEqual(responseResult.Any(), true);
     }
 
     [TearDown]
@@ -48,6 +41,7 @@ public class ValidationControllerTests
     {
         if (response != null)
             response.Dispose();
+
         if (client != null)
             client.Dispose();
     }
