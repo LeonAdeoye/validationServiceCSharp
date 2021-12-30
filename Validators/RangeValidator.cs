@@ -3,7 +3,7 @@ using static System.Int32;
 
 namespace validation_service.Validators
 {
-    internal class RangeValidator : IValidator
+    public class RangeValidator : IValidator
     {
         public string Validate(string value, ValidationConfiguration validationConfiguration)
         {

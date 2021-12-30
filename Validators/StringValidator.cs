@@ -3,7 +3,7 @@ using validation_service.Models;
 
 namespace validation_service.Validators
 {
-    internal class StringValidator : IValidator
+    public class StringValidator : IValidator
     {  
         private readonly Regex upperCaseRegex = new("^[0-9A-Z\\W]*$");
         private readonly Regex lowerCaseRegex = new("^[0-9a-z\\W]*$");

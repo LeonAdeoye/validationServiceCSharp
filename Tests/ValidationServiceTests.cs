@@ -7,7 +7,9 @@ namespace validation_service.Tests;
 [TestFixture]
 public class ValidationServiceTests
 {
-    private readonly IValidationService validationService = new ValidationService();
+    private readonly IValidationService validationService;
+
+    public ValidationServiceTests(IValidationService validationService) => this.validationService = validationService;
 
     [Test]
     public void ValidateRow_EmptyValidationConfigurations_ReturnsOneError()

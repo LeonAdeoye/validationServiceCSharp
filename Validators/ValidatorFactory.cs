@@ -12,7 +12,7 @@
         CURRENCY
     }
 
-    internal class ValidatorFactory : IValidatorFactory
+    public class ValidatorFactory : IValidatorFactory
     {
         // TODO use dependency injection
         private readonly BooleanValidator booleanValidator = new();

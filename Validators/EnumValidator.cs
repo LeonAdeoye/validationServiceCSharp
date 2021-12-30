@@ -2,7 +2,7 @@
 
 namespace validation_service.Validators
 {
-    internal class EnumValidator : IValidator
+    public class EnumValidator : IValidator
     {
         public string Validate(string value, ValidationConfiguration validationConfiguration)
         {

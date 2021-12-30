@@ -2,7 +2,7 @@
 
 namespace validation_service.Validators
 {
-    internal class EmptyValidator : IValidator
+    public class EmptyValidator : IValidator
     {
         public string Validate(string value, ValidationConfiguration validationConfiguration)
         {

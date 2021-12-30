@@ -3,7 +3,7 @@ using validation_service.Models;
 
 namespace validation_service.Validators
 {
-    internal class CurrencyValidator : IValidator
+    public class CurrencyValidator : IValidator
     {
         private readonly Regex currencyRegex = new("^[A-Z]{3}$");
         public string Validate(string value, ValidationConfiguration validationConfiguration)

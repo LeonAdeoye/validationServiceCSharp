@@ -6,14 +6,11 @@ namespace validation_service.Services
 {
     public class ValidationService : IValidationService
     {
-        private readonly ValidatorFactory validatorFactory;
+        private readonly IValidatorFactory validatorFactory;
         private readonly EmptyValidator emptyValidator;
 
-        public ValidationService()
-        {
-            this.validatorFactory = new();
-            this.emptyValidator = new();
-        }
+        public ValidationService(IValidatorFactory validatorFactory, EmptyValidator emptyValidator) =>
+            (this.validatorFactory, this.emptyValidator) = (validatorFactory, emptyValidator);
 
         public IEnumerable<string> Validate(string fileName, bool hasHeader, char delimiter, ValidationConfiguration[] validationConfigurations)
         {

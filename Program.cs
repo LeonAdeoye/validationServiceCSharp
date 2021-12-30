@@ -11,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IValidationService, ValidationService>();
+builder.Services.AddSingleton<IValidatorFactory, ValidatorFactory>();
+builder.Services.AddSingleton<EmptyValidator>();
 
 var app = builder.Build();
 

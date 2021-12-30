@@ -12,17 +12,14 @@ namespace validation_service.Tests;
 [TestFixture]
 public class ValidationControllerTests
 {
-    private readonly ValidationService validationService = new();
+    private readonly IValidationService validationService;
     private HttpClient client;
     private HttpResponseMessage response;
     private const string ServiceBaseURL = "http://localhost:20099/";
     private ILogger<ValidationServiceController> logger;
     private HttpRequestMessage request;
 
-    ValidationControllerTests(ILogger<ValidationServiceController> logger)
-    {
-        this.logger = logger;
-    }
+    public ValidationControllerTests(ILogger<ValidationServiceController> logger, IValidationService validationService) => (this.logger, this.validationService) = (logger, validationService);
 
     [SetUp]
     public void ReInitializeTest()

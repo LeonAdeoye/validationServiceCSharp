@@ -3,7 +3,7 @@ using validation_service.Models;
 
 namespace validation_service.Validators
 {
-    internal class DecimalValidator : IValidator
+    public class DecimalValidator : IValidator
     {
         private readonly Regex decimalRegex = new("^[0-9]+(\\.[0-9]+)?$");
         public string Validate(string value, ValidationConfiguration validationConfiguration)

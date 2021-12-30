@@ -2,6 +2,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using validation_service.Models;
 using validation_service.Services;
+using validation_service.Validators;
 
 namespace validation_service.Controllers;
 
@@ -12,11 +13,8 @@ public class ValidationServiceController : ControllerBase
     private readonly ILogger<ValidationServiceController> logger;
     private readonly IValidationService validationService;
 
-    public ValidationServiceController(ILogger<ValidationServiceController> logger, IValidationService validationService)
-    {
-        this.logger = logger;
-        this.validationService = validationService;
-    }
+    public ValidationServiceController(ILogger<ValidationServiceController> logger, IValidationService validationService) =>
+        (this.logger, this.validationService) = (logger, validationService);
 
     [HttpPost(Name = "PostValidate")]
     public string Post(ValidationRequest validationRequest)

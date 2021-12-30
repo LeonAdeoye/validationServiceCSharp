@@ -3,7 +3,7 @@ using validation_service.Models;
 
 namespace validation_service.Validators
 {
-    internal class RegexValidator : IValidator
+    public class RegexValidator : IValidator
     {
         public string Validate(string value, ValidationConfiguration validationConfiguration)
         {
