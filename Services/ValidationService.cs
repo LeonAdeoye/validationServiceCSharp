@@ -1,6 +1,7 @@
 using validation_service.Models;
 using validation_service.Validators;
 using static System.Threading.Thread;
+using System.Linq;
 
 namespace validation_service.Services
 {
@@ -8,13 +9,16 @@ namespace validation_service.Services
     {
         private readonly IValidatorFactory validatorFactory;
         private readonly EmptyValidator emptyValidator;
+        private readonly ILogger<ValidationService> logger;
 
-        public ValidationService(IValidatorFactory validatorFactory, EmptyValidator emptyValidator) =>
-            (this.validatorFactory, this.emptyValidator) = (validatorFactory, emptyValidator);
+        public ValidationService(IValidatorFactory validatorFactory, EmptyValidator emptyValidator, ILogger<ValidationService> logger) =>
+            (this.validatorFactory, this.emptyValidator, this.logger) = (validatorFactory, emptyValidator, logger);
 
         public IEnumerable<string> Validate(string fileName, bool hasHeader, char delimiter, ValidationConfiguration[] validationConfigurations)
         {
             List<string> errors = new();
+
+            logger.LogInformation($"Reading lines from file: {fileName}");
 
             Parallel.ForEach(File.ReadLines(fileName), (row, _, rowIndex) =>
             {
@@ -32,6 +36,7 @@ namespace validation_service.Services
             if (columnValues.Length != validationConfigurations.Length)
             {
                 listOfErrors.Add($"The number of column values does not match the number of validation configurations at row: {rowIndex}");
+                LogAllErrors(listOfErrors);
                 return listOfErrors;
             }
 
@@ -42,7 +47,8 @@ namespace validation_service.Services
                     var currentValidationConfiguration = validationConfigurations[configurationIndex];
                     if (columnIndex == currentValidationConfiguration.Id)
                     {
-                        Console.WriteLine($"Validating columnIndex: {columnIndex} using configurationIndex: {configurationIndex} using thread with ID: {CurrentThread.ManagedThreadId}");
+                        logger.LogDebug($"Validating columnIndex: {columnIndex} using configurationIndex: {configurationIndex} using thread with ID: {CurrentThread.ManagedThreadId}");
+
                         var value = columnValues[columnIndex];
                         var error = emptyValidator.Validate(value, currentValidationConfiguration);
 
@@ -60,7 +66,14 @@ namespace validation_service.Services
                         break;
                 }
             }
+
+            LogAllErrors(listOfErrors);
             return listOfErrors;
+        }
+
+        private void LogAllErrors(List<string> listOfErrors)
+        {
+            listOfErrors.ForEach(error => logger.LogError(error));
         }
 
         private string ValidateColumn(string value, ValidationConfiguration validationConfiguration)
