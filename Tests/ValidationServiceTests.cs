@@ -1,6 +1,8 @@
+using Moq;
 using NUnit.Framework;
 using validation_service.Models;
 using validation_service.Services;
+using validation_service.Validators;
 
 namespace validation_service.Tests;
 
@@ -9,12 +11,17 @@ public class ValidationServiceTests
 {
     private readonly IValidationService validationService;
 
-    public ValidationServiceTests(IValidationService validationService) => this.validationService = validationService;
+    public ValidationServiceTests()
+    {
+        this.validationService = new ValidationService(new ValidatorFactory(), new EmptyValidator(), new Mock<ILogger<ValidationService>>().Object);
+    }
+
+    public ValidationServiceTests(IValidationService validationService) => (this.validationService) = (validationService);
 
     [Test]
     public void ValidateRow_EmptyValidationConfigurations_ReturnsOneError()
     {
-        var result = validationService.ValidateRow(0, new string[] {"Horatio", "Harper"}, new ValidationConfiguration[] {});
+        var result = validationService.ValidateRow(0, new string[] {"Horatio", "Harper"}, Array.Empty<ValidationConfiguration>());
         Assert.AreEqual(1, result.Count());
         Assert.AreEqual("The number of column values does not match the number of validation configurations at row: 0", result.First());
     }
@@ -22,7 +29,7 @@ public class ValidationServiceTests
     [Test]
     public void ValidateRow_EmptyRow_ReturnsNoErrors()
     {
-        var result = validationService.ValidateRow(0, new string[] {}, new ValidationConfiguration[] { });
+        var result = validationService.ValidateRow(0, Array.Empty<string>(), Array.Empty<ValidationConfiguration>());
         Assert.AreEqual(0, result.Count());
     }
 
