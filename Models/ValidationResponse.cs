@@ -19,7 +19,7 @@ namespace validation_service.Models
                 if (index < Errors.Count - 1)
                     sb.Append(", ");
             }
-            return $"{{\"RESULT\": \"{Result}\", \"ERRORS\": [{sb}]}}";
+            return $"{{\"Result\": \"{Result}\", \"Errors\": [{sb}]}}";
         }
     }
 }
